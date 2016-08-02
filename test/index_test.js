@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import OnScreen from '../lib/index';
 
 describe('Instantiation', () => {
@@ -111,6 +112,28 @@ describe('Tracking', () => {
 
         expect(instance.trackedElements.hasOwnProperty('.target')).to.equal(true);
         expect(instance.trackedElements.hasOwnProperty('.horizontal')).to.equal(true);
+    });
+
+    it('should call the enter callback with direction', () => {
+        let calledCallback = false;
+        const spy = sinon.spy();
+
+        instance.on('enter', '.target', spy);
+
+        window.scrollTo(0, 1000);
+
+        // We need to wait for scrolling to finish
+        setTimeout(() => {
+            expect(spy.getCall(0).args[1]).to.equal('down');
+        }, 0);
+
+        window.scrollTo(0, 500);
+
+        // We need to wait for scrolling to finish
+        setTimeout(() => {
+            expect(spy.getCall(1).args[1]).to.equal('up');
+        }, 0);
+
     });
 });
 
