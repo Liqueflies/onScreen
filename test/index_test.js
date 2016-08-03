@@ -122,25 +122,25 @@ describe('Tracking', () => {
         window.scrollTo(0, 1000);
 
         setTimeout(() => {
-            expect(spy.getCall(0).args[1].down()).to.equal(true);
+            expect(spy.getCall(0).args[1]).to.have.property('down').equal(true);
         }, 0);
 
         window.scrollTo(0, 500);
 
         setTimeout(() => {
-            expect(spy.getCall(1).args[1].up()).to.equal(true);
+            expect(spy.getCall(1).args[1]).to.have.property('up').equal(true);
         }, 0);
 
         window.scrollTo(1000, 500);
 
         setTimeout(() => {
-            expect(spy.getCall(0).args[1].right()).to.equal(true);
+            expect(spy.getCall(0).args[1]).to.have.property('right').equal(true);
         }, 0);
 
         window.scrollTo(500, 500);
 
         setTimeout(() => {
-            expect(spy.getCall(1).args[1].left()).to.equal(true);
+            expect(spy.getCall(1).args[1]).to.have.property('left').equal(true);
         }, 0);
     });
 });
