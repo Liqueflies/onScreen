@@ -115,25 +115,33 @@ describe('Tracking', () => {
     });
 
     it('should call the enter callback with direction', () => {
-        let calledCallback = false;
         const spy = sinon.spy();
 
         instance.on('enter', '.target', spy);
 
         window.scrollTo(0, 1000);
 
-        // We need to wait for scrolling to finish
         setTimeout(() => {
-            expect(spy.getCall(0).args[1]).to.equal('down');
+            expect(spy.getCall(0).args[1].down()).to.equal(true);
         }, 0);
 
         window.scrollTo(0, 500);
 
-        // We need to wait for scrolling to finish
         setTimeout(() => {
-            expect(spy.getCall(1).args[1]).to.equal('up');
+            expect(spy.getCall(1).args[1].up()).to.equal(true);
         }, 0);
 
+        window.scrollTo(1000, 500);
+
+        setTimeout(() => {
+            expect(spy.getCall(0).args[1].right()).to.equal(true);
+        }, 0);
+
+        window.scrollTo(500, 500);
+
+        setTimeout(() => {
+            expect(spy.getCall(1).args[1].left()).to.equal(true);
+        }, 0);
     });
 });
 
